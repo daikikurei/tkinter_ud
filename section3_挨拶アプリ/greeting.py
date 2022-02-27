@@ -1,5 +1,6 @@
 import tkinter
 from PIL import ImageTk, Image
+from tkinter import END
 
 #ウィンドウの作成
 root = tkinter.Tk()
@@ -7,6 +8,22 @@ root.title('あいさつアプリ') #タイトル
 root.iconbitmap("./icon/greeting.ico") #アイコン画像　#https://icon-icons.com/ja/ #https://icons8.jp/
 root.geometry('400x400') #サイズ #横x縦
 root.resizable(0,0) #サイズの変更を許可するかどうか #0:許可しない、1:許可する
+
+#関数の定義
+def submit_name():
+    if radio_value.get() == 'morning':
+        # output_text = 'おはようございます!' + name.get() + 'さん'
+        # greeting_label = tkinter.Label(output_frame, text=output_text, bg=output_color)
+        greeting_label = tkinter.Label(output_frame, text=f'おはようございます!{name.get()}さん', bg=output_color) #f'おはようございます!{name.get()}さん':f文字列 {}で囲った文字列が入る
+    elif radio_value.get() == 'noon':
+        greeting_label = tkinter.Label(output_frame, text=f'こんにちは!{name.get()}さん', bg=output_color)
+    elif radio_value.get() == 'night':
+        greeting_label = tkinter.Label(output_frame, text=f'こんばんは!{name.get()}さん', bg=output_color)
+    
+    greeting_label.pack()
+    
+    #入力文字列の削除
+    name.delete(0, END) #0文字目から最後までを削除
 
 #色の定義
 output_color = '#A9A9A9'
@@ -24,7 +41,7 @@ submit_img = tkinter.PhotoImage(file='./icon/submit.png')
 #エントリー&ボタンの作成
 name = tkinter.Entry(input_frame, width=30)
 name.insert(0, '名前を入力してください')
-submit_button = tkinter.Button(input_frame, image=submit_img)
+submit_button = tkinter.Button(input_frame, image=submit_img, command=submit_name) #command:ボタンを押したときに呼び出される関数名
 name.grid(row=0, column=0, padx=10, pady=10, columnspan=3) #columnspan=3:3つのcolumnを1つと扱う
 submit_button.grid(row=0, column=3, padx=10, pady=10) #column=3:0,1,2,3の3に配置した。
 
